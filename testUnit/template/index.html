@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900">
+  <h1 class="text-3xl font-bold underline">
+    hola
+    {% for your_list_element in modal %}
+        <div>
+            {% if your_list_element != 0  %}
+                <p class="text-sm text-green-500">{{ your_list_element }} </p>
+            {% endif %}
+        </div>
+    {% endfor %}
+  </h1>
+</body>
+</html>
+
+   

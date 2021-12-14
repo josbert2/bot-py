@@ -1,0 +1,7 @@
+{
+  "devDependencies": {
+    "@tailwindcss/jit": "^0.1.18",
+    "postcss": "^8.4.4",
+    "tailwindcss": "^2.2.19"
+  }
+}
