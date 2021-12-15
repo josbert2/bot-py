@@ -88,10 +88,9 @@ loopPlatformProducto = [(500, 500), (500, 500), (600, 600), (250, 250), (400, 40
 
 
 
-
+soloxhoy.crwalUrl()
 soloxhoy.igPost(total_producto, bgPlatform, loopPlatform, loopPlatformProducto)
 #soloxhoy.postFB(total_producto, bgPlatform, loopPlatform, loopPlatformProducto)
 #soloxhoy.story(total_producto, bgPlatform, loopPlatform, loopPlatformProducto)
 #soloxhoy.push(total_producto, bgPlatform, loopPlatform, loopPlatformProducto)
 #soloxhoy.fbHorizontal(total_producto, bgPlatform, loopPlatform, loopPlatformProducto)
-#soloxhoy.crwalUrl()
