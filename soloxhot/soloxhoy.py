@@ -6,7 +6,12 @@ import xlrd
 import master as x
 
 
+#Incluir categoria
+
+
+
 def igPost(total_producto, bgPlatform, loopPlatform, loopPlatformProducto):
+   print('Generando imagenes para Instagram post...')
    mainPlatform = 'img/armado/post-ig.png'
    for j in range(len(total_producto)):
      
@@ -55,5 +60,9 @@ def igPost(total_producto, bgPlatform, loopPlatform, loopPlatformProducto):
 
       x.draw_multiple_line_text(armado, precio, font3, '#FFF', offsetVertical + img_h + diff + diffCuadrito + 5)
       armado.show()
-     
-        
+
+def postFb():
+   print('holaaa')     
+
+def donwloadImageAndRemoveBg():
+   print('holaaa')  

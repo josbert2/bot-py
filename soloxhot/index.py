@@ -90,4 +90,4 @@ loopPlatformProducto = [(500, 500), (500, 500), (600, 600), (250, 250), (400, 40
 
 
 soloxhoy.igPost(total_producto, bgPlatform, loopPlatform, loopPlatformProducto)
-
+soloxhoy.postFb()
