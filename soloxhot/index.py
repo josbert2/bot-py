@@ -44,20 +44,15 @@ def draw_multiple_line_text(image, text, font, text_color, text_start_height):
                   line, font=font, fill=text_color)
         y_text += line_height
 
-workbook = xlrd.open_workbook("P_P.xlsx","rb")
+workbook = xlrd.open_workbook("link.xlsx","rb")
 sheets = workbook.sheet_names()
-productos_titulo = []
-marca_titulo = []
-precio_titulo = []
-total_producto = []
+productos_link = []
+
 for sheet_name in sheets:
     sh = workbook.sheet_by_name(sheet_name)
     for rownum in range(sh.nrows):
         row_valaues = sh.row_values(rownum)
-        productos_titulo.append(row_valaues[0])
-        marca_titulo.append(row_valaues[1])
-        precio_titulo.append(row_valaues[3])
-        total_producto.append(row_valaues)       
+        productos_link.append(row_valaues[0])      
 
 #platform = ['postInsta', 'Facebook', 'Story', 'Push', 'facebookhorizontal']
 platform = ['post-ig', 'post-fb', 'story', 'push', 'fb-horizontal']
@@ -89,8 +84,8 @@ loopPlatformProducto = [(500, 500), (500, 500), (600, 600), (250, 250), (400, 40
 
 
 soloxhoy.crwalUrl()
-soloxhoy.igPost(total_producto, bgPlatform, loopPlatform, loopPlatformProducto)
-#soloxhoy.postFB(total_producto, bgPlatform, loopPlatform, loopPlatformProducto)
-#soloxhoy.story(total_producto, bgPlatform, loopPlatform, loopPlatformProducto)
-#soloxhoy.push(total_producto, bgPlatform, loopPlatform, loopPlatformProducto)
-#soloxhoy.fbHorizontal(total_producto, bgPlatform, loopPlatform, loopPlatformProducto)
+soloxhoy.igPost(productos_link, bgPlatform, loopPlatform, loopPlatformProducto)
+soloxhoy.postFB(productos_link, bgPlatform, loopPlatform, loopPlatformProducto)
+soloxhoy.story(productos_link, bgPlatform, loopPlatform, loopPlatformProducto)
+soloxhoy.push(productos_link, bgPlatform, loopPlatform, loopPlatformProducto)
+soloxhoy.fbHorizontal(productos_link, bgPlatform, loopPlatform, loopPlatformProducto)
