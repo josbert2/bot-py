@@ -96,7 +96,7 @@ def crwalUrl():
 
    for sheet_name in sheets:
       sh = workbook.sheet_by_name(sheet_name)
-      for rownum in range(9, sh.nrows):
+      for rownum in range(sh.nrows):
          row_valaues = sh.row_values(rownum)
          productos_link.append(row_valaues[0])
 
@@ -173,6 +173,22 @@ def crwalUrl():
          print(f'[bold red] ✔ [/bold red]  Marca no encontrada [bold red] Failed [/bold red]')
 
 
+      # last element selenium
+
+
+
+      try:
+         element = driver.find_element_by_css_selector('.breadcrumb-items')
+         categorias.append(driver.find_element_by_css_selector('.breadcrumb-items a:last-child').text )
+         print(f'[bold green] ✔ [/bold green] Marca encontrada [bold green]SUCCESS [/bold green]')
+      except NoSuchElementException:
+         categorias.append(0)
+         print(f'[bold red] ✔ [/bold red]  Marca no encontrada [bold red] Failed [/bold red]')
+
+
+
+
+
       
   
 
@@ -203,8 +219,11 @@ def igPost(total_producto, bgPlatform, loopPlatform, loopPlatformProducto):
       font3 = ImageFont.truetype('Pangram-Light.otf', 38)
       titulo = nombre[j] 
       marca = marcas[j]
-      categoria = "Esta es una categoria"
-      precio = "$ 90.000"
+      categoria = categorias[j]
+      if precioOfertas[j] == 0:
+         precio = ''
+      else:
+         precio = precioOfertas[j]
       
 
       cuadradito = Image.open('cuadradito.png').convert('RGBA')
@@ -238,10 +257,11 @@ def igPost(total_producto, bgPlatform, loopPlatform, loopPlatformProducto):
 
      
 
-      armado.show()
+      armado.save('save/' + 'ig-post_' + str(j) + '.png')
       if dev:
          grid(armado)
    taskStatus('Making image for Instagram Post', len(total_producto))
+   
       
 
      
@@ -269,10 +289,13 @@ def postFB(total_producto, bgPlatform, loopPlatform, loopPlatformProducto):
       font = ImageFont.truetype('Pangram-Bold.otf', 36)
       font2 = ImageFont.truetype('Pangram-Light.otf', 25)
       font3 = ImageFont.truetype('Pangram-Light.otf', 34)
-      titulo = "CASTILLO DE HOGWARTS Y " 
-      marca = "Cubic Fun"
-      categoria = "Puzzles y rompecabezas"
-      precio = "$ 190.000"
+      titulo = nombre[j] 
+      marca = marcas[j]
+      categoria = categorias[j]
+      if precioOfertas[j] == 0:
+         precio = ''
+      else:
+         precio = precioOfertas[j]
       
 
       cuadradito = Image.open('cuadradito.png').convert('RGBA')
@@ -328,9 +351,10 @@ def postFB(total_producto, bgPlatform, loopPlatform, loopPlatformProducto):
 
      
 
-      armado.show()
+      armado.save('save/' + 'post-fb_' + str(j) + '.png')
    taskStatus(task='Making image for Facebook Post', limit=len(total_producto))
-     
+   
+
 def story(total_producto, bgPlatform, loopPlatform, loopPlatformProducto):
    mainPlatform = 'img/armado/story.png'
    index = 2
@@ -355,10 +379,13 @@ def story(total_producto, bgPlatform, loopPlatform, loopPlatformProducto):
       font = ImageFont.truetype('Pangram-Bold.otf', 56)
       font2 = ImageFont.truetype('Pangram-Light.otf', 50)
       font3 = ImageFont.truetype('Pangram-Light.otf', 90)
-      titulo = "Esta es la descripci" 
-      marca = "Esto es una marca"
-      categoria = "Esta es una categoria"
-      precio = "$ 90.000"
+      titulo = nombre[j] 
+      marca = marcas[j]
+      categoria = categorias[j]
+      if precioOfertas[j] == 0:
+         precio = ''
+      else:
+         precio = precioOfertas[j]
       
 
       cuadradito = Image.open('cuadradito.png').convert('RGBA')
@@ -394,9 +421,10 @@ def story(total_producto, bgPlatform, loopPlatform, loopPlatformProducto):
 
      
 
-      armado.show()
-   taskStatus(task='Making image for Story', limit=len(total_producto))
+      armado.save('save/' + 'story_' + str(j) + '.png')
 
+   taskStatus(task='Making image for Story', limit=len(total_producto))
+   
 def push(total_producto, bgPlatform, loopPlatform, loopPlatformProducto):
    mainPlatform = 'img/armado/push_.png'
 
@@ -432,10 +460,13 @@ def push(total_producto, bgPlatform, loopPlatform, loopPlatformProducto):
       font = ImageFont.truetype('Pangram-Bold.otf', 22)
       font2 = ImageFont.truetype('Pangram-Light.otf', 20)
       font3 = ImageFont.truetype('Pangram-Light.otf', 38)
-      titulo = "APPLE MACBOOK PRO 13.3 I5 2.50GHZ 8GB RAM" 
-      marca = "Apple"
-      categoria = "Notebooks"
-      precio = "$ 490.009"
+      titulo = nombre[j] 
+      marca = marcas[j]
+      categoria = categorias[j]
+      if precioOfertas[j] == 0:
+         precio = ''
+      else:
+         precio = precioOfertas[j]
       
 
       cuadradito = Image.open('cuadradito.png').convert('RGBA')
@@ -492,9 +523,10 @@ def push(total_producto, bgPlatform, loopPlatform, loopPlatformProducto):
 
      
 
-      armado.show()
+      armado.save('save/' + 'push_' + str(j) + '.png')
    taskStatus(task='Making image for Push', limit=len(total_producto))
-          
+   
+
 def fbHorizontal(total_producto, bgPlatform, loopPlatform, loopPlatformProducto):
    mainPlatform = 'img/armado/fb-horizontal.png'
    index = 4
@@ -530,10 +562,13 @@ def fbHorizontal(total_producto, bgPlatform, loopPlatform, loopPlatformProducto)
       font = ImageFont.truetype('Pangram-Bold.otf', 22)
       font2 = ImageFont.truetype('Pangram-Light.otf', 20)
       font3 = ImageFont.truetype('Pangram-Light.otf', 38)
-      titulo = "APPLE MACBOOK PRO 13.3 I5 2.50GHZ 8GB RAM" 
-      marca = "Apple"
-      categoria = "Notebooks"
-      precio = "$ 490.009"
+      titulo = nombre[j] 
+      marca = marcas[j]
+      categoria = categorias[j]
+      if precioOfertas[j] == 0:
+         precio = ''
+      else:
+         precio = precioOfertas[j]
       
 
       cuadradito = Image.open('cuadradito.png').convert('RGBA')
@@ -597,6 +632,6 @@ def fbHorizontal(total_producto, bgPlatform, loopPlatform, loopPlatformProducto)
 
      
 
-      armado.show()
+      armado.save('save/' + 'fb-horizontal_' + str(j) + '.png')
    taskStatus(task='Making image for Facebook Horizontal', limit=len(total_producto))
-    
+   
