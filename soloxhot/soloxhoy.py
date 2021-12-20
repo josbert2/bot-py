@@ -131,8 +131,11 @@ def crwalUrl():
       Image.open(BytesIO(response.content)).convert('RGBA').save('image/' + str(i) + '.png')
 
       print('[bold blue] Quitando fondo de la imagen... [/bold blue]')
-      #x.remobeBG('image/' + str(i) + '.png', i)
-      x.removeBG2('image/' + str(i) + '.png', i)
+      if platform == "win32":
+         x.removeBG2('image/' + str(i) + '.png', i)
+      else:
+         x.remobeBG('image/' + str(i) + '.png', i)
+     
 
       
 
