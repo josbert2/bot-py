@@ -112,7 +112,7 @@ def crwalUrl():
       if platform == "win32":
          driver = webdriver.Chrome(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install(), options=options)
       else:
-         driver = webdriver.Chrome(executable_path='./chromedriver')
+         driver = webdriver.Chrome(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install())
         
       #driver.set_window_position(0, 0)
       driver.get(productos_link[i])
