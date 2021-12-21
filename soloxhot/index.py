@@ -12,7 +12,7 @@ import locale
 
 import soloxhoy
 
-devInfo = True
+devInfo = False
 locale.setlocale(locale.LC_MONETARY, 'en_US.UTF-8')
 
 def format_float_with_trailing_zeros(num):
@@ -53,7 +53,7 @@ for sheet_name in sheets:
     for rownum in range(sh.nrows):
         row_valaues = sh.row_values(rownum)
         productos_link.append(row_valaues[0])      
-print(len(productos_link))
+
 #platform = ['postInsta', 'Facebook', 'Story', 'Push', 'facebookhorizontal']
 platform = ['post-ig', 'post-fb', 'story', 'push', 'fb-horizontal']
 bgPlatform = [
@@ -84,8 +84,8 @@ loopPlatformProducto = [(500, 500), (500, 500), (600, 600), (250, 250), (400, 40
 
   
 #soloxhoy.crwalUrl()
-soloxhoy.igPost( bgPlatform, loopPlatform, loopPlatformProducto)
+#soloxhoy.igPost( bgPlatform, loopPlatform, loopPlatformProducto)
 #soloxhoy.postFB( bgPlatform, loopPlatform, loopPlatformProducto)
 #soloxhoy.story( bgPlatform, loopPlatform, loopPlatformProducto)
-#soloxhoy.push( bgPlatform, loopPlatform, loopPlatformProducto)
+soloxhoy.push( bgPlatform, loopPlatform, loopPlatformProducto)
 #soloxhoy.fbHorizontal( bgPlatform, loopPlatform, loopPlatformProducto)

@@ -18,9 +18,34 @@ from rich import print
 from rich.console import Console
 import sys
 from selenium.webdriver.chrome.options import Options
+import random
 
 from selenium.common.exceptions import NoSuchElementException
 from sys import platform
+
+
+
+
+
+
+tituloSeed = ['COCHE PASEO ULTRA LIGHT BABY WAY BW-208F19 FUCSIA', 'BARANDA DE SEGURIDAD DE CAMA AZUL BABY WAY']
+precioSeed = ['34.900', '9.900', '134.900']
+categoriaSeed = ['Baranda', 'Vestido', 'Coche']
+marcaSeed = ['Baby Way', 'Naomi', 'Baby Way']
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 dev = True
 devInfo = True
@@ -49,7 +74,7 @@ def progressBar(limit ):
 campama = ''
 
 def grid(img):
-   step_count = 2
+   step_count = 5
    #height = 600
    #width = 600
    image = img
@@ -93,7 +118,7 @@ def crwalUrl():
 
    for sheet_name in sheets:
       sh = workbook.sheet_by_name(sheet_name)
-      for rownum in range(9, sh.nrows):
+      for rownum in range(sh.nrows):
          row_valaues = sh.row_values(rownum)
          productos_link.append(row_valaues[0])
 
@@ -102,7 +127,7 @@ def crwalUrl():
    taskStatus(task='Extract Info from Excel', limit=len(productos_link))
 
 
-   
+   print(len(productos_link))
    for i in range(len(productos_link)):
    
       options = Options()
@@ -226,12 +251,12 @@ def igPost( bgPlatform, loopPlatform, loopPlatformProducto):
       # if one line
 
 
-      titulo = 'Baloncesto Resbalín' if devInfo else nombre[j]
-      marca = 'Fisher Price' if devInfo else  marcas[j]
-      categoria =  'jueguetes de exterior' if devInfo else categorias[j]
+      titulo = tituloSeed[1] if devInfo else nombre[j].capitalize()
+      marca = marcaSeed[1] if devInfo else  marcas[j]
+      categoria = categoriaSeed[1] if devInfo else categorias[j]
       categoria = categoria.lower()
       if devInfo:
-         precio = '13.000'
+         precio = precioSeed[1]
       else:
          if precioOfertas[j] == 0:
             precio = ''
@@ -267,9 +292,9 @@ def igPost( bgPlatform, loopPlatform, loopPlatformProducto):
 
 
 
-      x.draw_multiple_line_text3(armado, 29, titulo, 'Pangram-ExtraBold.otf', 45, '#3B369F', offsetVertical + img_h - 100, 0, 28, 0)
-      x.draw_multiple_line_text3(armado, 29, marca, 'Pangram-Regular.otf', 34, '#3B369F', diffMarca, 0, 28, 0)
-      x.draw_multiple_line_text4(armado, 0, categoria, 'Pangram-Regular.otf', 38, '#3B369F', diffCategoria, 0, 28, 0)
+      x.draw_multiple_line_text_one_line(armado, 29, titulo.capitalize(), 'Pangram-ExtraBold.otf', 55, '#3B369F', offsetVertical + img_h - 100, 0, 28, 0, 23)
+      x.draw_multiple_line_text_one_line_marca(armado, 29, marca.capitalize(), 'Pangram-Regular.otf', 38, '#3B369F', offsetVertical + img_h - 16, 0, 28, 0)
+      x.draw_multiple_line_text_one_line_category(armado, 29, categoria.capitalize(), 'Pangram-Medium.otf', 45, '#3B369F', offsetVertical + img_h + 25, 0, 28, 0)
       armado.paste(armado, (0,0))
       armado.paste(producto_img, offset, producto_img)
       armado.paste(cuadradito, (int(cuadraditoW),  diffCuadrito), cuadradito)
@@ -317,22 +342,26 @@ def postFB( bgPlatform, loopPlatform, loopPlatformProducto):
 
       font = ImageFont.truetype('Pangram-ExtraBold.otf', 40)
       font2 = ImageFont.truetype('Pangram-Light.otf', 38)
-      font3 = ImageFont.truetype('Pangram-ExtraBold.otf', 58)
+      font3 = ImageFont.truetype('Pangram-Black.otf', 58)
 
       fontMarca = ImageFont.truetype('Pangram-Light.otf', 27)
       fontCategoria = ImageFont.truetype('Pangram-Regular.otf', 30)
       
-      titulo = 'Baloncesto Resbalín' if devInfo else nombre[j]
-      marca = 'Fisher Price' if devInfo else  marcas[j]
-      categoria =  'Juguetes de exterior' if devInfo else categorias[j]
+      
+  
+
+
+      titulo = tituloSeed[1] if devInfo else nombre[j].capitalize()
+      marca = marcaSeed[1] if devInfo else  marcas[j]
+      categoria = categoriaSeed[1] if devInfo else categorias[j]
       categoria = categoria.lower()
       if devInfo:
-         precio = '130.000'
+         precio = precioSeed[1]
       else:
          if precioOfertas[j] == 0:
             precio = ''
          else:
-            precio = precioOfertas[j].replace('$', '')
+            precio = precioOfertas[j].replace('$', '').replace('$', '')
       
 
       cuadradito = Image.open('cuadradito.png').convert('RGBA')
@@ -342,30 +371,30 @@ def postFB( bgPlatform, loopPlatform, loopPlatformProducto):
       cuadraditoW = bg_w // 2 
       cuadraditoW = cuadraditoW + (cuadradito.size[0] // 2)
       diffTitulo = textwrap.wrap(titulo, width=20)
-
+   
       if len(diffTitulo) == 1:
          
-         diff = 280
-         diffCuadrito = 135
-         diffCategoria = 45
+         diff = 130
+         diffCuadrito = 110
+         diffCategoria = 75
          diffTituloH = 92
          categoriaHDIFF = 0
          diffMarquita = 0
          
       elif len(diffTitulo) == 2:
-         diff = 180
-         diffCuadrito = 235
-         diffCategoria = 60
-         diffTituloH = 22
-         categoriaHDIFF = 100
-         diffMarquita = 20
+         diff = 130
+         diffCuadrito = 110
+         diffCategoria = 75
+         diffTituloH = 92
+         categoriaHDIFF = 0
+         diffMarquita = 0
       elif len(diffTitulo) == 3:
          diff = 130
-         diffCuadrito = 285
-         diffCategoria = 90
-         diffTituloH = 22
-         categoriaHDIFF = 170
-         diffMarquita = 50
+         diffCuadrito = 110
+         diffCategoria = 75
+         diffTituloH = 92
+         categoriaHDIFF = 0
+         diffMarquita = 0
       elif len(diffTitulo) == 4:
       
          diff = 130
@@ -380,12 +409,20 @@ def postFB( bgPlatform, loopPlatform, loopPlatformProducto):
       mitadFondo1 = bg_w // 2
       mitadFondo2 = mitadFondo1 // 2
       total = bg_w // 2
+      
+
+
+      tree = bg_w // 2
+      tree2 = tree // 2
+      treeTotal = tree 
+ 
+     
    
  
 
-      x.draw_multiple_line_text3(armado, 29, titulo, 'Pangram-ExtraBold.otf', 45, '#3B369F', offsetVertical + 90, total, 20, 9)
-      x.draw_multiple_line_text3(armado, 36, marca, 'Pangram-Regular.otf', 35, '#3B369F', offsetVertical + 220 + diffMarquita, total, 20)
-      x.draw_multiple_line_text3(armado, 45, categoria, 'Pangram-Regular.otf', 35, '#3B369F', offsetVertical + 220 + diffCategoria, total, 20)
+      x.draw_left_titulo_pushfb(armado, titulo, "Pangram-ExtraBold.otf",17, 47, '#3B369F', offsetVertical + diffTituloH, treeTotal, 10)
+      x.draw_left(armado, marca, "Pangram-Regular.otf",22, 28, '#3B369F', offsetVertical + diffTituloH + 150, treeTotal)
+      x.draw_left(armado, categoria, "Pangram-Medium.otf",22, 32, '#3B369F', offsetVertical + diffTituloH + 190, treeTotal)
 
       armado.paste(armado, (0,0))
       armado.paste(producto_img, (30 ,(bg_h - img_h) // 2 + 80), producto_img)
@@ -403,17 +440,17 @@ def postFB( bgPlatform, loopPlatform, loopPlatformProducto):
          centerR2 =   35
 
       
-      armado.paste(cuadradito, ( centerR + 15, offsetVertical + diff + diffCuadrito  + 10), cuadradito)
+      armado.paste(cuadradito, (treeTotal, offsetVertical + diff + diffCuadrito  + 120), cuadradito)
 
      
-      x.draw_multiple_line_text(armado, '$' + precio, font3, '#FFF', offsetVertical + diff + diffCuadrito  + 23, push="precio-fb", width=img_w, positionCenter=centerR2 + centerR + 15)
+      x.draw_multiple_line_text(armado, '$' + precio, font3, '#FFF', offsetVertical + diff + diffCuadrito  + 129, push="precio-fb", width=img_w, positionCenter=treeTotal + centerR2)
 
       if dev:
-         armado.show()
+         grid(armado)
       else:
          if devInfo:
             armado.show()
-      armado.show()
+  
       armado.save('save/postigFB_' + str(j) + '.png')
    taskStatus(task='Making image for Facebook Post', limit=len(productos_link))
      
@@ -495,7 +532,7 @@ def story( bgPlatform, loopPlatform, loopPlatformProducto):
       x.draw_multiple_line_text3(armado, 29, titulo, 'Pangram-ExtraBold.otf', 65, '#3B369F', offsetVertical + img_h - 20 + diffTituloH, 0, 28, 0)
       x.draw_multiple_line_text3(armado, 29, marca, 'Pangram-Regular.otf', 45, '#3B369F', offsetVertical + img_h + diff + diffMarca , 0, 28, 0)
       x.draw_multiple_line_text3(armado, 29, categoria, 'Pangram-Regular.otf', 45, '#3B369F', offsetVertical + img_h + diff + 90 + diffCategoria , 0, 28, 0)
-
+   
 
       armado.paste(armado, (0,0))
       armado.paste(producto_img, ((bg_w - img_w) // 2 , (bg_h - img_h) // 2 - 140), producto_img)
@@ -555,10 +592,10 @@ def push( bgPlatform, loopPlatform, loopPlatformProducto):
       font3 = ImageFont.truetype('Pangram-ExtraBold.otf', 58)
 
       fontMarca = ImageFont.truetype('Pangram-Light.otf', 20)
-      fontCategoria = ImageFont.truetype('Pangram-Bold.otf', 30)
+      fontCategoria = ImageFont.truetype('Pangram-Bold.otf', 25)
 
 
-      titulo = 'Muñeca de fronzen' if devInfo else nombre[j]
+      titulo = 'Muñeca de fronzenf sdf sfsdfsdfsdf qweqweqweqweqweqwe xfvsgsfdgas' if devInfo else nombre[j]
       marca = 'Marca' if devInfo else  marcas[j]
       categoria =  'Categoria' if devInfo else categorias[j]
       if devInfo:
@@ -575,7 +612,7 @@ def push( bgPlatform, loopPlatform, loopPlatformProducto):
       cuadradito = cuadradito.resize((tw + 100, th + 40))
       cuadraditoW = (bg_w - cuadradito.size[0]) // 2
 
-      diffTitulo = textwrap.wrap(titulo, width=28)
+      diffTitulo = textwrap.wrap(titulo, width=22)
       
       
       if len(diffTitulo) == 1:
@@ -583,13 +620,33 @@ def push( bgPlatform, loopPlatform, loopPlatformProducto):
          diffCuadrito = 20
          diffCategoria = - 120
          diffMarca = - 120
-         diffTituloH =  bg_h // 2 - 160
+         diffTituloH =   30
+         d = 0
+      elif len(diffTitulo) == 2:
+         diff = 35
+         diffCuadrito = 20
+         diffCategoria = - 120
+         diffMarca = - 120
+         diffTituloH =   30
+      elif len(diffTitulo) == 3:
+         diff = 35
+         diffCuadrito = 20
+         diffCategoria = - 120
+         diffMarca = - 120
+         diffTituloH =   -10
+      elif len(diffTitulo) == 4:
+         diff = 35
+         diffCuadrito = 20
+         diffCategoria = - 120
+         diffMarca = - 120
+         diffTituloH =   - 40
       else:
          diff = 35
          diffCuadrito = 20
          diffCategoria = - 120
          diffMarca = - 120
-         diffTituloH =  bg_h // 2 - 160
+         diffTituloH = 30
+         d = -20
 
       centeer = (bg_w // 2) - cuadradito.size[0] // 2
       centeer = bg_w  - bg_w // 2 //  2 - cuadradito.size[0] // 2
@@ -598,11 +655,18 @@ def push( bgPlatform, loopPlatform, loopPlatformProducto):
       tw3, th3 = canvas.textsize(categoria, font=font2)
 
       total = diffArmado2
-   
 
-      x.draw_multiple_line_text3(armado, 29, titulo, 'Pangram-ExtraBold.otf', 37, '#3B369F', offsetVertical + 0, 680, 20, 9)
-      x.draw_multiple_line_text(armado, marca, fontMarca, '#3b369f', offsetVertical + img_h - diff + diffMarca, push="pushreal", width=img_w)
-      x.draw_multiple_line_text(armado, categoria, fontCategoria, '#3b369f', offsetVertical + img_h + diff - 45 + diffCategoria, push="pushreal", width=img_w, positionCenter=newCenterText )
+      tree =  bg_w - 320 
+      tree2 = (tree // 2) + 320 
+      treeTotal = 750
+     
+
+      x.draw_left(armado, titulo, "Pangram-ExtraBold.otf", 18, 28, '#3B369F', offsetVertical + diffTituloH , treeTotal)
+      x.draw_left(armado, marca, "Pangram-Medium.otf",22, 20, '#3B369F', offsetVertical + img_h - diff + diffMarca , treeTotal)
+      x.draw_left(armado, categoria, "Pangram-Regular.otf",22, 24, '#3B369F', offsetVertical + img_h + diff - 45 + diffCategoria, treeTotal)
+
+      #x.draw_multiple_line_text(armado, marca, fontMarca, '#3b369f', offsetVertical + img_h - diff + diffMarca, push="pushreal", width=img_w)
+      #x.draw_multiple_line_text(armado, categoria, fontCategoria, '#3b369f', offsetVertical + img_h + diff - 45 + diffCategoria, push="pushreal", width=img_w, positionCenter=newCenterText )
 
       armado.paste(armado, (0,0))
      
@@ -617,12 +681,14 @@ def push( bgPlatform, loopPlatform, loopPlatformProducto):
          tt =  67
       else:
          tt =  70
-      print(s)
+    
 
 
       diffArmado = 800
       diffArmado2 = armado.size[0]
       diffArmado2 = (diffArmado2 - diffArmado)
+
+      print(diffArmado2)
       #centerR = bg_w - (782 // 2) + (tw // 2) - tw
       centerR = diffArmado2 + diffArmado // 2 
       centerR2 = centerR + ( bg_w - centerR) // 2
@@ -728,7 +794,7 @@ def fbHorizontal( bgPlatform, loopPlatform, loopPlatformProducto):
          diffMarca = - 160
          diffTituloH =  150
       
-      print(len(diffTitulo))
+ 
 
       centeer = (bg_w // 2) - cuadradito.size[0] // 2
       centeer = bg_w  - bg_w // 2 //  2 - cuadradito.size[0] // 2

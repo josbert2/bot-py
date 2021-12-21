@@ -8,6 +8,12 @@ import numpy as np
 import cv2
 
 import io
+from rembg.bg import remove
+
+
+
+
+
 
 def center_with_letter_spacing(text, lines, draw, image_width, line_width, font, y_text, difference):
     desired_width_of_text = 1
@@ -77,7 +83,7 @@ def draw_multiple_line_text(image, text, font, text_color, text_start_height, pu
         elif push == 'preciofbhorizontal':
             draw.text(((2000 - line_width) / 2 , y_text), line, font=font, fill=text_color)
         elif push == 'centerc':
-            print(0)
+            
             center_with_letter_spacing(text, lines, draw, image_width, line_width, font, y_text, difference=20)
         else:
             draw.text(((image_width - line_width) / 2, y_text), line, font=font, fill=text_color)
@@ -256,9 +262,9 @@ def draw_multiple_line_text4(image,  diffTitulo, text, fontFamily, fontWidth, te
         diffHorizontal = WIDTHLOG
         #remove space 
 
+        line_width, line_height = font.getsize(letter)
 
-
-        print(letter_width)
+  
         for i in range(0, len(letter)):
            
             letter_width, letter_height = draw.textsize(letter[i], font=font)
@@ -267,8 +273,265 @@ def draw_multiple_line_text4(image,  diffTitulo, text, fontFamily, fontWidth, te
                 xpos += - 1 
        
             #draw.text((( ( diffHorizontal  // 2) + int(diffTitulo) + (image_width -  line_width) / 2) + xpos , y_text), letter[i], text_color, font=font, spacing=10)
-            draw.text((image_width // 2  +  xpos, y_text), letter[i], text_color, font=font, spacing=10)
+            draw.text(((image_width - line_width) // 2 + 35  +  xpos, y_text), letter[i], text_color, font=font, spacing=10)
             xpos += letter_width - 3
             
         
         y_text += line_height
+
+
+
+
+
+
+
+
+def draw_text_center_letter_spacing(image, text, fontFamily, fontWidth, fontColor, y_text):
+    draw = ImageDraw.Draw(image)
+    font = ImageFont.truetype(fontFamily, fontWidth)
+    image_width, image_height = image.size
+    text_size = width_and_height_calculator_in_pixel(text, "Calibri", 11)
+   
+    text_width, text_height = draw.textsize(text, font=font)
+    draw.text(((image_width - text_width) // 2, y_text), text, font=font, fill=fontColor, spacing=10)
+    
+
+
+
+
+def draw_left(image, text, fontFamily, fontWidth, fontSize, fontColor, y_text, x_text, diffHeight=None):
+    draw = ImageDraw.Draw(image)
+    font = ImageFont.truetype(fontFamily, fontSize)
+    if diffHeight != None:
+        diffHeight = diffHeight
+    else:
+        diffHeight = 0
+    image_width, image_height = image.size
+    text_size = width_and_height_calculator_in_pixel(text, "Calibri", 11)
+   
+    text_width, text_height = draw.textsize(text, font=font)
+    lines = textwrap.wrap(text, width=fontWidth)
+  
+    for line in lines:
+        line_width, line_height = font.getsize(line)
+        draw.text((x_text, y_text), line, font=font, fill=fontColor)
+        y_text += line_height + diffHeight
+
+
+
+
+def draw_multiple_line_text_one_line(image,  diffTitulo, text, fontFamily, fontWidth, text_color, text_start_height, WIDTHLOG=None, widthFontText=None, diffHeight=None, diffLineal=None):
+
+   
+    font = ImageFont.truetype(fontFamily, fontWidth)
+    draw = ImageDraw.Draw(image)
+    y_text = text_start_height
+    image_width, image_height = image.size
+    header_text = text
+    lines = textwrap.wrap(header_text, width=widthFontText)
+    if diffTitulo == 0:
+        diffTitulo = 0
+    else:
+        diffTitulo = diffTitulo 
+    x = 0
+    xpos = 0
+    checkIndex = 0
+  
+    if diffHeight != None:
+        diffHeight = diffHeight
+    else:
+        diffHeight = 0
+    
+    if diffLineal != None:
+        diffLineal = diffLineal
+    else:
+        diffLineal = 0
+
+    for idx, letter in enumerate(lines):
+        line_width, line_height = font.getsize(letter)
+        letter_width, letter_height = draw.textsize(letter, font=font)
+        checkIndex = idx
+   
+        diffHorizontal = WIDTHLOG
+        if checkIndex == 0:
+            if checkIndex == 0:
+                xpos = 0
+                xpoy = -1  + diffHeight
+            elif checkIndex == 1:
+                xpos = 0
+                xpoy = - 3 + diffHeight
+            elif checkIndex == 2:
+                xpos = 0
+                xpoy = -3 + diffHeight
+            elif checkIndex == 3:
+                xpos = 0
+                xpoy = 3 + diffHeight
+
+            for i in range(0, len(letter)):
+                letter_width, letter_height = draw.textsize(letter[i], font=font)
+            
+                if letter_width == 36:
+                    xpos += - 1 
+                if letter_width == 10:
+                    xpos += 8
+                draw.text((( diffLineal - ( diffHorizontal  // 2) + int(diffTitulo) + (image_width -  line_width) / 2) + xpos , y_text), letter[i], text_color, font=font, spacing=10)
+                xpos += letter_width - 4.5
+                
+            
+            y_text += line_height + xpoy
+
+
+def draw_multiple_line_text_one_line_marca(image,  diffTitulo, text, fontFamily, fontWidth, text_color, text_start_height, WIDTHLOG=None, widthFontText=None, diffHeight=None, diffLineal=None):
+
+   
+    font = ImageFont.truetype(fontFamily, fontWidth)
+    draw = ImageDraw.Draw(image)
+    y_text = text_start_height
+    image_width, image_height = image.size
+    header_text = text
+    lines = textwrap.wrap(header_text, width=widthFontText)
+    if diffTitulo == 0:
+        diffTitulo = 0
+    else:
+        diffTitulo = diffTitulo 
+    x = 0
+    xpos = 0
+    checkIndex = 0
+  
+    if diffHeight != None:
+        diffHeight = diffHeight
+    else:
+        diffHeight = 0
+    
+    if diffLineal != None:
+        diffLineal = diffLineal
+    else:
+        diffLineal = 0
+
+    for idx, letter in enumerate(lines):
+        line_width, line_height = font.getsize(letter)
+        letter_width, letter_height = draw.textsize(letter, font=font)
+        checkIndex = idx
+
+        diffHorizontal = WIDTHLOG
+        if checkIndex == 0:
+            if checkIndex == 0:
+                xpos = 0
+                xpoy = -1  + diffHeight
+            elif checkIndex == 1:
+                xpos = 0
+                xpoy = - 3 + diffHeight
+            elif checkIndex == 2:
+                xpos = 0
+                xpoy = -3 + diffHeight
+            elif checkIndex == 3:
+                xpos = 0
+                xpoy = 3 + diffHeight
+
+            for i in range(0, len(letter)):
+                letter_width, letter_height = draw.textsize(letter[i], font=font)
+            
+                if letter_width == 27:
+                    xpos += 2
+                    print(letter[i])
+                if letter_width == 26:
+                    xpos += 2
+                if letter_width == 10:
+                    xpos += 8
+
+                draw.text((( 16 + ( diffHorizontal  // 2)  + (image_width -  line_width) / 2) + xpos , y_text), letter[i], text_color, font=font, spacing=10)
+                xpos += letter_width - 4.5
+                
+            
+            y_text += line_height + xpoy
+
+
+
+def draw_multiple_line_text_one_line_category(image,  diffTitulo, text, fontFamily, fontWidth, text_color, text_start_height, WIDTHLOG=None, widthFontText=None, diffHeight=None, diffLineal=None):
+
+   
+    font = ImageFont.truetype(fontFamily, fontWidth)
+    draw = ImageDraw.Draw(image)
+    y_text = text_start_height
+    image_width, image_height = image.size
+    header_text = text
+    lines = textwrap.wrap(header_text, width=widthFontText)
+    if diffTitulo == 0:
+        diffTitulo = 0
+    else:
+        diffTitulo = diffTitulo 
+    x = 0
+    xpos = 0
+    checkIndex = 0
+  
+    if diffHeight != None:
+        diffHeight = diffHeight
+    else:
+        diffHeight = 0
+    
+    if diffLineal != None:
+        diffLineal = diffLineal
+    else:
+        diffLineal = 0
+
+    for idx, letter in enumerate(lines):
+        line_width, line_height = font.getsize(letter)
+        letter_width, letter_height = draw.textsize(letter, font=font)
+        checkIndex = idx
+
+        diffHorizontal = WIDTHLOG
+        if checkIndex == 0:
+            if checkIndex == 0:
+                xpos = 0
+                xpoy = -1  + diffHeight
+            elif checkIndex == 1:
+                xpos = 0
+                xpoy = - 3 + diffHeight
+            elif checkIndex == 2:
+                xpos = 0
+                xpoy = -3 + diffHeight
+            elif checkIndex == 3:
+                xpos = 0
+                xpoy = 3 + diffHeight
+
+            for i in range(0, len(letter)):
+                letter_width, letter_height = draw.textsize(letter[i], font=font)
+            
+                if letter_width == 28 and letter[i] != "b":
+                    xpos += 2
+                if letter_width == 28 and letter[i] == "b":
+                    xpos += 2
+                if letter_width == 10:
+                    xpos += 8
+                print(letter_width)
+
+                draw.text((( 16 + ( diffHorizontal  // 2)  + (image_width -  line_width) / 2) + xpos , y_text), letter[i], text_color, font=font, spacing=10)
+                xpos += letter_width - 4.5
+                
+            
+            y_text += line_height + xpoy
+
+
+
+
+
+
+
+def draw_left_titulo_pushfb(image, text, fontFamily, fontWidth, fontSize, fontColor, y_text, x_text, diffHeight=None):
+    draw = ImageDraw.Draw(image)
+    font = ImageFont.truetype(fontFamily, fontSize)
+    if diffHeight != None:
+        diffHeight = diffHeight
+    else:
+        diffHeight = 0
+    image_width, image_height = image.size
+    text_size = width_and_height_calculator_in_pixel(text, "Calibri", 11)
+   
+    text_width, text_height = draw.textsize(text, font=font)
+    lines = textwrap.wrap(text, width=fontWidth)
+ 
+    for idx, line in enumerate(lines):
+        if idx == 0:
+            line_width, line_height = font.getsize(line)
+            draw.text((x_text, y_text), line, font=font, fill=fontColor)
+            y_text += line_height + diffHeight
