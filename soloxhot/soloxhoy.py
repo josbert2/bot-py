@@ -22,8 +22,8 @@ from selenium.webdriver.chrome.options import Options
 from selenium.common.exceptions import NoSuchElementException
 from sys import platform
 
-dev = False
-devInfo = False
+dev = True
+devInfo = True
 def taskStatus(task='Default task', limit=20):
    console = Console()
    tasks = [f"Run: {task}" for n in range(0, 1)]
@@ -49,7 +49,7 @@ def progressBar(limit ):
 campama = ''
 
 def grid(img):
-   step_count = 6
+   step_count = 2
    #height = 600
    #width = 600
    image = img
@@ -106,10 +106,11 @@ def crwalUrl():
    for i in range(len(productos_link)):
    
       options = Options()
-      #options.add_argument('--headless')
-      #options.add_argument('--disable-gpu')
+    
       print(platform)
       if platform == "win32":
+         options.add_argument('--headless')
+         options.add_argument('--disable-gpu')
          driver = webdriver.Chrome(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install(), options=options)
       else:
          driver = webdriver.Chrome(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install())
@@ -267,8 +268,8 @@ def igPost( bgPlatform, loopPlatform, loopPlatformProducto):
 
 
       x.draw_multiple_line_text3(armado, 29, titulo, 'Pangram-ExtraBold.otf', 45, '#3B369F', offsetVertical + img_h - 100, 0, 28, 0)
-      x.draw_multiple_line_text3(armado, 29, marca, 'Pangram-Regular.otf', 34, '#3B369F', diffMarca, 0, 20, 0)
-      x.draw_multiple_line_text3(armado, 29, categoria, 'Pangram-Regular.otf', 38, '#3B369F', diffCategoria, 0, 28, 0)
+      x.draw_multiple_line_text3(armado, 29, marca, 'Pangram-Regular.otf', 34, '#3B369F', diffMarca, 0, 28, 0)
+      x.draw_multiple_line_text4(armado, 0, categoria, 'Pangram-Regular.otf', 38, '#3B369F', diffCategoria, 0, 28, 0)
       armado.paste(armado, (0,0))
       armado.paste(producto_img, offset, producto_img)
       armado.paste(cuadradito, (int(cuadraditoW),  diffCuadrito), cuadradito)
@@ -282,7 +283,7 @@ def igPost( bgPlatform, loopPlatform, loopPlatformProducto):
       else:
          if devInfo:
             armado.show()
-      armado.show()
+    
       armado.save('save/postig_' + str(j) + '.png')
       
    taskStatus('Making image for Instagram Post', len(productos_link))
