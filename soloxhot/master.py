@@ -208,3 +208,67 @@ def draw_multiple_line_text3(image,  diffTitulo, text, fontFamily, fontWidth, te
             
         
         y_text += line_height + xpoy
+
+
+
+
+import wx
+app = wx.App()
+ 
+def width_and_height_calculator_in_pixel(txt, fontname, fontsize):
+    dc   = wx.ScreenDC()
+   #dc.SetFont(...) # todo: https://wxpython.org/Phoenix/docs/html/wx.DC.html#wx.DC.SetFont
+    size = dc.GetTextExtent(txt)
+    return size
+ 
+
+
+
+
+def draw_multiple_line_text4(image,  diffTitulo, text, fontFamily, fontWidth, text_color, text_start_height, WIDTHLOG=None, widthFontText=None, diffHeight=None):
+
+   
+    font = ImageFont.truetype(fontFamily, fontWidth)
+    draw = ImageDraw.Draw(image)
+    y_text = text_start_height
+    image_width, image_height = image.size
+    header_text = text
+    lines = textwrap.wrap(header_text, width=widthFontText)
+    text_size = width_and_height_calculator_in_pixel(header_text, "Calibri", 11)        
+    if diffTitulo == 0:
+        diffTitulo = 0
+    else:
+        diffTitulo = diffTitulo 
+    x = 0
+    xpos = 0
+    checkIndex = 0
+  
+    if diffHeight != None:
+        diffHeight = diffHeight
+    else:
+        diffHeight = 0
+    
+    for idx, letter in enumerate(lines):
+        line_width, line_height = font.getsize(letter)
+        letter_width, letter_height = draw.textsize(letter, font=font)
+        letter_width2, letter_height2 = draw.textsize(letter, font=font)
+        checkIndex = idx
+        diffHorizontal = WIDTHLOG
+        #remove space 
+
+
+
+        print(letter_width)
+        for i in range(0, len(letter)):
+           
+            letter_width, letter_height = draw.textsize(letter[i], font=font)
+          
+            if letter_width == 36:
+                xpos += - 1 
+       
+            #draw.text((( ( diffHorizontal  // 2) + int(diffTitulo) + (image_width -  line_width) / 2) + xpos , y_text), letter[i], text_color, font=font, spacing=10)
+            draw.text((image_width // 2  +  xpos, y_text), letter[i], text_color, font=font, spacing=10)
+            xpos += letter_width - 3
+            
+        
+        y_text += line_height
